@@ -1,0 +1,7 @@
+2026-10-23 23:41:55.533 | INFO     | DataAnalyzer | ✅ DataAnalyzer config loaded from config.yaml
+2026-10-23 23:41:55.533 | INFO     | DataAnalyzer | 🔍 DataAnalyzer domain: security
+2026-10-23 23:41:55.542 | WARNING  | DataAnalyzer | DataAnalyzer timeout auto-raised 90s → 1881s (server: 3.00 decode / 6.00 prefill tok/s, est call 1254s, ×1.5 safety)
+2026-10-23 23:41:55.620 | INFO     | DataAnalyzer | 🚀 DataAnalyzer starting: domain=security interval=1200s batch=10 concurrent=3
+2026-10-23 23:41:55.631 | INFO     | DataAnalyzer | ℹ️ No unanalyzed items found
+2026-10-23 23:41:55.632 | INFO     | DataAnalyzer | ✅ Analysis cycle #1 done in 0.0s — analyzed=0 failed=0
+2026-10-23 23:50:19.402 | INFO     | DataAnalyzer | 🛑 DataAnalyzer stop signal sent

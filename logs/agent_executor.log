@@ -1,0 +1,32 @@
+2026-10-23 23:41:55.533 | INFO     | AgentExecutor | ✅ AgentExecutor initialized: instruction_len=1981, max_iterations=10, max_tokens=2048, timeout=3600s
+2026-10-23 23:41:55.533 | INFO     | AgentExecutor | ✅ Service reference set for database logging
+2026-10-23 23:41:55.548 | INFO     | BackupRetrier | 🔁 Backup retrier started, checking every 3600s
+2026-10-23 23:41:55.548 | INFO     | AgentExecutor | 🚀 Starting continuous execution (interval: 3600s)
+2026-10-23 23:41:55.548 | INFO     | AgentExecutor | 
+================================================================================
+🔄 Execution cycle #1
+================================================================================
+2026-10-23 23:41:55.670 | INFO     | AgentExecutor | 🔧 LLM config  server=OK  model=qwen3-8b  backend=rocm
+2026-10-23 23:41:55.671 | INFO     | AgentExecutor | 🔧   context_length        = 40960                      [server:/v1/runtime/limits]
+2026-10-23 23:41:55.671 | INFO     | AgentExecutor | 🔧   decode_tps            = 1.33                       [server:/v1/runtime/limits]
+2026-10-23 23:41:55.671 | INFO     | AgentExecutor | 🔧   prefill_tps           = 0.0                        [server:/v1/runtime/limits]
+2026-10-23 23:41:55.671 | INFO     | AgentExecutor | 🔧   max_output_tokens     = 638                        [server:/v1/runtime/limits]
+2026-10-23 23:41:55.671 | INFO     | AgentExecutor | 🔧   max_prompt_tokens     = (derived by tier policy)   [derived]
+2026-10-23 23:41:55.671 | INFO     | AgentExecutor | 🔧   prompt_ctx_fraction   = (derived by tier policy)   [derived]
+2026-10-23 23:41:55.671 | INFO     | AgentExecutor | 🔧   target_step_latency_s = (derived by tier policy)   [derived]
+2026-10-23 23:41:55.671 | INFO     | AgentExecutor | 🔧   tier                  = (derived by tier policy)   [derived]
+2026-10-23 23:41:55.671 | WARNING  | AgentExecutor | 🔧   ⚠ data_analyzer.timeout=90s is shorter than the estimated 1250s for one call (prompt≈2048 tok @ 2.7 tok/s prefill, 638 out @ 1.3 tok/s): it will time out
+2026-10-23 23:41:55.699 | INFO     | AgentExecutor | specs filtered by ai_service.exposed_tools: 74 → 8
+2026-10-23 23:41:55.699 | WARNING  | AgentExecutor | ⚠️ wall_clock_s=3600s allows only 4 LLM call(s) at the profile's estimated 547s per call. The run may abort before all steps complete; the checkpoint will let the next cycle resume. Consider raising ai_service.agent_execution_interval or lowering ai_service.max_agent_iterations.
+2026-10-23 23:41:55.699 | INFO     | AgentExecutor | 🧠 Profile: size_tier=medium prompt_budget=6144 reserve_out=638 decode_tps=1.33 prefill_tps=2.66 est_call=547s | wall=3600s est_calls=4 max_llm_calls=8
+2026-10-23 23:41:55.704 | WARNING  | AgentExecutor | ⏱️ Wall clock raised 3600s → 11495s to fit 14 calls × 547s/call × 1.5 safety (was capped by agent_execution_interval)
+2026-10-23 23:41:55.704 | INFO     | AgentExecutor | 🧠 Adaptive engine: tier=medium prompt_budget=6144 max_tools=10 max_llm_calls=8 wall=3600s specs=8 tools=8
+2026-10-23 23:50:19.400 | INFO     | BackupRetrier | 🛑 Backup retrier stopped
+2026-10-23 23:50:19.402 | INFO     | AgentExecutor | 🛑 Cancelling in-flight AgentRun
+2026-10-23 23:50:19.402 | INFO     | AgentExecutor | 🛑 Stop signal sent to continuous execution
+2026-10-23 23:50:19.429 | INFO     | AgentExecutor | 🗄 DB verification run=32327d92: rows in raw_data tagged with this run = 0 (tool-reported writes = 0)
+2026-10-23 23:50:19.429 | INFO     | AgentExecutor | ❌ Adaptive run: success=False steps={'1': 'exhausted', '2': 'cancelled'} llm_calls=7 peak_prompt=736
+2026-10-23 23:50:19.429 | WARNING  | AgentExecutor | ⚠️ Adaptive run notes: (none)
+2026-10-23 23:50:19.430 | INFO     | AgentExecutor | ✅ Cycle #1 complete: success=False
+2026-10-23 23:50:19.430 | INFO     | AgentExecutor | ⚠️ Cycle #1 failed — retrying in 60s (failure streak: 1)
+2026-10-23 23:50:19.430 | INFO     | AgentExecutor | 🛑 Continuous execution stopped

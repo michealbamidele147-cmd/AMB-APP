@@ -1,0 +1,7 @@
+2026-10-23 23:41:55.672 | INFO     | amb_sentinel.agent.amb_runtime | CapabilityProfile: size_tier=medium n_ctx=40960 reserve_out=638 prompt_budget=6144 usable_ctx=40194 decode_tps=1.33 prefill_tps=2.66 est_call_latency=2789s
+2026-10-23 23:44:15.009 | WARNING  | amb_sentinel.agent.amb_runtime | llm reply run=32327d92 step=1 call=1 len=174
+2026-10-23 23:45:24.819 | WARNING  | amb_sentinel.agent.amb_runtime | llm reply run=32327d92 step=1 call=2 len=258
+2026-10-23 23:46:30.020 | WARNING  | amb_sentinel.agent.amb_runtime | llm reply run=32327d92 step=1 call=3 len=252
+2026-10-23 23:47:40.234 | WARNING  | amb_sentinel.agent.amb_runtime | llm reply run=32327d92 step=1 call=4 len=278
+2026-10-23 23:48:51.859 | WARNING  | amb_sentinel.agent.amb_runtime | llm reply run=32327d92 step=1 call=5 len=254
+2026-10-23 23:50:09.388 | WARNING  | amb_sentinel.agent.amb_runtime | llm reply run=32327d92 step=1 call=6 len=271

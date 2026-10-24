@@ -1,0 +1,195 @@
+# AMB-Sentinel configuration — example.
+# Copy to config_dir()/config.yaml (chmod 600) or run `sentinel init`.
+# Never commit the real config.yaml to git.
+
+system:
+  name: "AMB-Sentinel AI Security System"
+  version: "1.0.0"
+  environment: "production"
+  instance_id: "sentinel-primary-01"
+
+ai_service:
+  require_real_backend: true
+  primary_model: "local_llm_cloud"
+  auto_run_agent: true
+  max_agent_iterations: 10
+  agent_execution_interval: 3600
+  data_analysis_interval: 1200
+  enable_concurrent_execution: true
+  max_total_tokens: 2040
+  request_timeout: 3600
+  # download_dir: <absolute-path>   # default: paths.download_dir()
+
+  health_check_interval: 60
+  max_concurrent_requests: 50
+  enable_monitoring: true
+  metrics_port: 9090
+
+  validator:
+    forbidden_patterns:
+      - ["\\bDROP\\s+TABLE\\b", "Destructive SQL command not allowed"]
+      - ["\\brm\\s+-rf\\b", "Dangerous filesystem operation"]
+      - ["(?i)delete\\s+from\\s+users", "Attempt to delete user records is prohibited"]
+      - ["(?i)format\\s+c:", "Formatting system drive is not allowed"]
+
+  agent_instruction: |
+    TASK: Continuously gather, analyze, and store intelligence about kidnapping,
+    banditry, and ransom threats from public sources.
+
+    RULES:
+    - Always call validate_url before http_fetch or scrape_page.
+    - Respect robots.txt where applicable.
+    - Store raw data with a timestamp and source metadata.
+    - Prefer batch tools (http_fetch_batch, download_multiple).
+    - After storing raw data, DataAnalyzer will analyze it automatically.
+    - Reply with exactly one JSON object: {"tool": "<name>", "args": {...}}
+      to call a tool, or {"tool": null, "final_answer": "..."} when done.
+
+    STEP 1 — DISCOVER: search the web for recent articles.
+    STEP 2 — VALIDATE: validate each candidate URL with validate_url.
+    STEP 3 — FETCH: fetch pages via http_fetch_batch or scrape_page.
+    STEP 4 — EXTRACT: extract clean text from each page.
+    STEP 5 — STORE: insert into raw_data with analyzed=FALSE.
+    STEP 6 — REPORT: return a short summary via final_answer.
+
+    SUCCESS: At least 5 new verified threat items inserted per cycle.
+
+  models:
+    - provider: "local_llm_cloud"
+      model_name: "qwen3-8b"
+      base_url: "http://localhost:8080"
+      enabled: true
+      # api_key: read from env LLM_CLOUD_API_KEY (see .env)
+      max_tokens: 0
+      temperature: 0.7
+      timeout: 2400
+      n_gpu_layers: -1
+      n_threads: 0
+
+    - provider: "llama-cpp"
+      model_name: ""
+      enabled: false
+      device: "auto"
+      temperature: 0.3
+      max_tokens: 512
+      timeout: 3600
+      max_retries: 2
+      context_length: 4096
+      batch_size: 1
+      n_gpu_layers: -1
+      n_threads: 6
+      chat_template: "llama-2"
+
+    - provider: "huggingface"
+      model_name: "google/gemma-2-2b-it"
+      enabled: false
+      device: "cpu"
+      temperature: 0.7
+      max_tokens: 256
+      timeout: 60
+      max_retries: 1
+
+    - provider: "gpt4all"
+      model_name: ""
+      enabled: false
+
+  embeddings:
+    model: "all-MiniLM-L6-v2"
+    # cache_dir: <absolute-path>   # default: paths.model_dir()
+    cache_size: 10000
+    enable_download: false
+    timeout: 30
+    device: "cpu"
+    similarity_threshold: 0.85
+
+database:
+  postgresql:
+    host: "localhost"
+    port: 5432
+    database: "amb_sentinel"
+    user: "amb_sentinel_user"
+    password: "<PROMPT>"     # set AMB_PG_PASSWORD or POSTGRES_PASSWORD in .env
+    min_connections: 2
+    max_connections: 20
+    timeout: 30
+    sslmode: "prefer"
+    pgvector:
+      enabled: true
+      dimension: 384
+      index_type: "ivfflat"
+      lists: 100
+      probes: 10
+      operator: "vector_cosine_ops"
+
+  redis:
+    host: "localhost"
+    port: 6379
+    db: 0
+    password: "<PROMPT>"     # set AMB_REDIS_PASSWORD or REDIS_PASSWORD in .env
+    max_connections: 50
+    socket_timeout: 5
+    socket_connect_timeout: 5
+    retry_on_timeout: true
+
+data_analyzer:
+  enabled: true
+  min_confidence: 0.3
+  interval: 1200
+  batch_size: 10
+  max_concurrent: 3
+  max_retries: 3
+  timeout: 90
+  circuit_breaker_threshold: 5
+  circuit_breaker_cooldown: 120
+  raw_data_table: "raw_data"
+  raw_data_id_col: "id"
+  raw_data_content_col: "content"
+  raw_data_analyzed_col: "analyzed"
+  raw_data_source_col: "source_type"
+  raw_data_order_col: "id"
+  analysis_results_table: "analysis_results"
+  domain: "auto"
+  temperature: 0.1
+  max_tokens: 512
+  output_schema:
+    analysis_id:         { type: "TEXT", primary: true }
+    raw_data_id:         { type: "BIGINT" }
+    content_hash:        { type: "VARCHAR(64)" }
+    content_preview:     { type: "TEXT" }
+    domain:              { type: "VARCHAR(50)" }
+    threat_level:        { type: "VARCHAR(50)" }
+    severity_score:      { type: "FLOAT" }
+    confidence:          { type: "FLOAT" }
+    categories:          { type: "JSONB" }
+    entities:            { type: "JSONB" }
+    keywords:            { type: "JSONB" }
+    reasoning:           { type: "TEXT" }
+    action_required:     { type: "BOOLEAN" }
+    urgency:             { type: "VARCHAR(50)" }
+    location:            { type: "TEXT" }
+    affected_population: { type: "TEXT" }
+    incident_count:      { type: "INTEGER" }
+    source_credibility:  { type: "FLOAT" }
+    warnings:            { type: "JSONB" }
+    metadata:            { type: "JSONB" }
+    created_at:          { type: "TIMESTAMPTZ", default: "NOW()" }
+    updated_at:          { type: "TIMESTAMPTZ", default: "NOW()" }
+  prompt_template: ""
+
+llm_cloud:
+  enabled: true
+  host: "localhost"
+  port: 8080
+  # api_key: read from env LLM_CLOUD_API_KEY
+  timeout_s: 300
+  probe_timeout_s: 3
+  backoff_initial_s: 1.0
+  backoff_max_s: 30.0
+  backoff_factor: 1.5
+  model_id: ""
+  model_path: ""
+  openai_compat:
+    base_url: ""
+    api_key: ""
+  backend_priority: "auto"
+  apply_hw_profile: true

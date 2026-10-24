@@ -1,0 +1,372 @@
+# AMB-Sentinel AI Security System - Production Configuration v1.0.0
+# PRODUCTION-HARDENED: All known bugs fixed, performance-optimized
+
+system:
+  name: "AMB-Sentinel AI Security System"
+  version: "1.0.0"
+  environment: "production"
+  instance_id: "sentinel-primary-01"
+
+# ============================================================================
+# LLM settings — EVERYTHING HERE IS AN OVERRIDE.
+# Leave a value null/absent and AMB-APP derives it from the LLM server
+# (GET /v1/runtime/limits). Precedence: env AMB_LLM_<FIELD> > this block > server.
+# Run `amb-llm-config` to print each value and where it came from, plus conflicts.
+# ============================================================================
+llm:
+  overrides:
+    context_length: null          # clamped to what the server actually loaded
+    max_prompt_tokens: null       # cap on one prompt; null = tier default
+    prompt_ctx_fraction: null     # 0.05..0.95 of usable context; null = tier default
+    max_output_tokens: null       # null = server recommended_response_tokens
+    target_step_latency_s: null   # trims the prompt so one call stays under this
+    decode_tps: null              # null = server measured
+    prefill_tps: null             # null = server measured
+    tier: null                    # nano|small|medium|large; null = from model size + ctx
+
+ai_service:
+  # refuse to run if no real backend is available. Prevents the
+  # "silently swap in DummyAdapter" failure mode that hid transport
+  # outages as "model returned garbage".
+  require_real_backend: true
+  primary_model: "local_llm_cloud"
+
+  # Agent Configuration
+  auto_run_agent: true
+  max_agent_iterations: 10
+  agent_execution_interval: 3600       # seconds between agent runs (1 hour)
+  data_analysis_interval: 1200          # seconds between data analysis cycles (20 min)
+  enable_concurrent_execution: true
+
+  # Token budget (now config-driven)
+  # max_total_tokens: 2040
+
+  # (removed) max_total_tokens: 2040 — a hard-coded number that contradicted
+  # the server's real context. All LLM limits now come from the LLM server;
+  # see the `llm.overrides` section below and run `amb-llm-config` to see
+  # every value + source.
+
+  # Evidence contracts: a step may only be closed with final_answer after
+  # a successful call to one of these tools (and >= min_rows written).
+  # Unlisted steps are inferred from the tool names in the step text.
+  step_contracts:
+    "1": { require_any: [ search_links ] }
+    "2": { require_any: [ validate_url ] }
+    "3": { require_any: [ scrape_page ] }
+    "4": { require_any: [ ] }
+    "5": { require_any: [ store_raw_item ], min_rows: 1 }
+    "6": { require_any: [ ] }
+
+  # store_raw_item: reject pages shorter than this many characters.
+  store:
+    min_chars: 200
+
+  # Custom validation rules
+  validator:
+    forbidden_patterns:
+      - ["\\bDROP\\s+TABLE\\b", "Destructive SQL command not allowed"]
+      - ["\\brm\\s+-rf\\b", "Dangerous filesystem operation"]
+      - ["(?i)delete\\s+from\\s+users", "Attempt to delete user records is prohibited"]
+      - ["(?i)format\\s+c:", "Formatting system drive is not allowed"]
+
+  # ====================================================================
+  # AGENT INSTRUCTION (Goal-oriented, flexible)
+  # ====================================================================
+  agent_instruction: |
+    TASK: Continuously gather, analyze, and store intelligence about kidnapping, banditry, and ransom threats from public sources.
+
+    RULES:
+    - Always call validate_url before http_fetch or scrape_page.
+    - Respect robots.txt where applicable.
+    - Store raw data with a timestamp and source metadata.
+    - Prefer batch tools (http_fetch_batch, download_multiple) when fetching several URLs.
+    - After storing raw data, the DataAnalyzer will analyze it automatically; do not call analysis tools.
+    - Reply with exactly one JSON object: {"tool": "<name>", "args": {...}} to call a tool, or {"tool": null, "final_answer": "<short result>"} when a step is done.
+    - Put all parameters inside "args". Use only the tools listed in the current step.
+
+    STEP 1 — DISCOVER: Search the web for recent articles about kidnapping, banditry, or ransom threats. Use search_links with a specific query (e.g. "kidnapping Nigeria 2026", "banditry attack", "ransom demand"). Return the top 5 candidate links.
+
+    STEP 2 — VALIDATE: Validate each candidate URL with validate_url. Drop any that fail.
+    
+    STEP 3 — FETCH: Fetch each valid page with scrape_page (one call per URL). Its result handle contains text_content (the clean article text).
+
+    STEP 4 — EXTRACT: Nothing to call: the clean text is already in text_content of each scrape_page result. Reply with final_answer listing which handles hold at least 200 characters of text.
+
+    STEP 5 — STORE: For each page call store_raw_item with args {"content": "$rN.text_content", "source_type": "news", "source_url": "<the page url>", 
+                    "title": "<the page title>"} where $rN is that page's scrape_page result handle. Never write SQL. Never copy article text yourself. 
+                    Finish only after store_raw_item returned inserted or duplicate for each page.
+    STEP 6 — REPORT: Return a short summary of new findings, highlighting the top 5 threats by severity. Use final_answer.
+
+    SUCCESS: At least 5 new, verified threat items inserted into raw_data per cycle.
+
+  # Legacy token budget (unused by the adaptive engine, kept for the
+  # legacy path). Adaptive mode uses max_llm_calls / wall_clock_s instead.
+
+  exposed_tools:
+    allow:
+      - search_links
+      - http_fetch
+      - scrape_page
+      - validate_url
+      - store_raw_item
+      - db_query
+      - db_execute
+      - fetch_article_text
+    deny_prefixes: [ "create_", "make_", "get_", "list_", "check_" ]
+
+  # Request & download settings
+  request_timeout: 3600
+  #download_dir: "/home/deve-oops/AMB-APP/tmp/ai_tools_downloads" - defaults to paths.download_dir())
+
+  # Health & monitoring
+  health_check_interval: 60
+  max_concurrent_requests: 50
+  enable_monitoring: true
+  metrics_port: 9090
+
+  # Local AI Models Configuration
+  models:
+    - provider: "local_llm_cloud"
+      model_name: "qwen3-8b"          # model-id already loaded on server
+      base_url: "http://localhost:8080"
+      enabled: true
+      # api_key intentionally NOT set here — ai_agent.py's _load_config()
+      # injects it from the LLM_CLOUD_API_KEY environment variable (see
+      # .env) so it never sits in plaintext in this version-controlled file.
+      # Leave both blank if local-llm-server's own api.key is also blank.
+      max_tokens: 0                    # 0 = unlimited (server handles it)
+      temperature: 0.7
+      timeout: 2400
+      n_gpu_layers: -1    # lets llama_cpp decide how many layers fit in your shared VRAM
+      n_threads: 0
+
+    - provider: "llama-cpp"
+      model_name: "/home/deve-oops/model/mistral-7b-instruct-v0.2.Q4_K_M.gguf"
+      enabled: false
+      device: "auto"
+      temperature: 0.3
+      # FIX: Reduced from 2048 to 512 — on CPU @ 2 tok/s, 2048 tok = 34+ min per call
+      # At 512 tok/call the agent completes each iteration in ~5 min (acceptable)
+      max_tokens: 512
+      timeout: 3600
+      max_retries: 2
+      # FIX: Reduced from 6144 to 4096 — saves ~1GB RAM, faster KV cache
+      context_length: 4096
+      batch_size: 1
+      # FIX: n_gpu_layers was 0 (CPU-only forced) — now -1 = auto-detect
+      # If GPU present: uses GPU layers automatically for 5-15x speedup
+      # If no GPU: falls back gracefully to CPU (same behavior as before)
+      n_gpu_layers: -1
+      n_threads: 6
+      trust_remote_code: true
+      low_cpu_mem_usage: true
+      chat_template: "llama-2"
+
+    - provider: "huggingface"
+      model_name: "google/gemma-2-2b-it"
+      enabled: false
+      device: "cpu"
+      temperature: 0.7
+      max_tokens: 256
+      timeout: 60
+      max_retries: 1
+
+    - provider: "gpt4all"
+      model_name: "/home/deve-oops/model/gpt4all-model.bin"
+      enabled: false
+      temperature: 0.1
+      max_tokens: 512
+      timeout: 60
+      max_retries: 2
+
+  # Enhanced Embeddings for Threat Intelligence
+  embeddings:
+    model: "all-MiniLM-L6-v2"
+    # cache_dir: parent folder holding HF hub cache. "${VAR}" is expanded
+    # at startup (see AIModelService._resolve_embedding_cache_dir). Leave
+    # empty to auto-search AMB_MODELS_DIR, paths.model_dir(), ./model, etc.
+    # Point it at the folder that contains
+    # models--sentence-transformers--all-MiniLM-L6-v2/
+    cache_dir: "${AMB_MODELS_DIR}"
+    cache_size: 10000
+    enable_download: false          # true = allow downloading if not cached (offline boxes: false)
+    timeout: 30
+    device: "cpu"
+    similarity_threshold: 0.85
+    allow_degraded_writes: false    # refuse to pollute pgvector with hash-fallback vectors
+
+# Database Configuration
+# SECURITY: Passwords use <PROMPT> sentinel.
+# At startup, ai_agent.py reads from environment variables first:
+#   export AMB_PG_PASSWORD="your_password"
+#   export AMB_REDIS_PASSWORD="your_password"
+# If env vars are absent and stdin is a TTY, the system prompts interactively.
+# NEVER commit plaintext passwords to config.yaml or version control.
+database:
+  postgresql:
+    host: "localhost"
+    port: 5432
+    database: "amb_sentinel"
+    user: "amb_sentinel_user"
+    password: "<PROMPT>"     # Set env var: export AMB_PG_PASSWORD="<your_password>"
+
+    # Connection Pool Settings
+    min_connections: 2
+    max_connections: 20
+    timeout: 30
+    sslmode: "prefer"
+
+    # PgVector Integration
+    pgvector:
+      enabled: true
+      dimension: 384
+      index_type: "ivfflat"
+      lists: 100
+      probes: 10
+      operator: "vector_cosine_ops"
+
+  redis:
+    host: "localhost"
+    port: 6379
+    db: 0
+    password: "<PROMPT>"     # Set env var: export AMB_REDIS_PASSWORD="<your_password>"
+    max_connections: 50
+    socket_timeout: 5
+    socket_connect_timeout: 5
+    retry_on_timeout: true
+
+# ============================================================================
+# DATA ANALYZER
+# ============================================================================
+data_analyzer:
+  enabled: true
+  min_confidence: 0.3
+  interval: 1200
+  batch_size: 10
+  max_concurrent: 3
+  max_retries: 3
+  timeout: 90
+  circuit_breaker_threshold: 5
+  circuit_breaker_cooldown: 120
+
+  raw_data_table:       "raw_data"
+  raw_data_id_col:      "id"
+  raw_data_content_col: "content"
+  raw_data_analyzed_col: "analyzed"
+  raw_data_source_col:  "source_type"
+  raw_data_order_col:   "id"
+
+  analysis_results_table: "analysis_results"
+
+  domain: "auto"
+  temperature: 0.1
+  max_tokens: 512
+
+  output_schema:
+    analysis_id:
+      type: "TEXT"
+      primary: true
+    raw_data_id:
+      type: "BIGINT"
+    content_hash:
+      type: "VARCHAR(64)"
+    content_preview:
+      type: "TEXT"
+    domain:
+      type: "VARCHAR(50)"
+    threat_level:
+      type: "VARCHAR(50)"
+    severity_score:
+      type: "FLOAT"
+    confidence:
+      type: "FLOAT"
+    categories:
+      type: "JSONB"
+    entities:
+      type: "JSONB"
+    keywords:
+      type: "JSONB"
+    reasoning:
+      type: "TEXT"
+    action_required:
+      type: "BOOLEAN"
+    urgency:
+      type: "VARCHAR(50)"
+    location:
+      type: "TEXT"
+    affected_population:
+      type: "TEXT"
+    incident_count:
+      type: "INTEGER"
+    source_credibility:
+      type: "FLOAT"
+    warnings:
+      type: "JSONB"
+    metadata:
+      type: "JSONB"
+    created_at:
+      type: "TIMESTAMPTZ"
+      default: "NOW()"
+    updated_at:
+      type: "TIMESTAMPTZ"
+      default: "NOW()"
+
+  prompt_template: ""
+
+  data_storage:
+    raw_data_table:
+      purpose: "Stores raw collected content for analysis"
+      key_columns: "id, content, source_type, analyzed, created_at"
+    analysis_results_table:
+      purpose: "Stores DataAnalyzer output — auto-created from output_schema"
+      note: "Schema is auto-generated from data_analyzer.output_schema above"
+
+# ============================================================================
+# LOCAL-LLM-CLOUD  (v1.0.0 adaptive backend integration)
+# ============================================================================
+# AMB Sentinel will probe this server at startup.
+# If reachable  → uses local-llm-cloud for all LLM inference (recommended).
+# If unreachable → falls back to direct llama-cpp / HF / OpenAI-compat.
+#
+# To start local-llm-cloud:
+#   cd /home/deve-oops/AMB-OPT/local-llm-cloud
+#   source /home/deve-oops/DEVE-BOX/bin/activate
+#   python -m serving.api_server serve --host 0.0.0.0 --port 8080
+#
+llm_cloud:
+  enabled: true
+  host: "localhost"
+  port: 8080
+  api_key: ""                   # set LLM_CLOUD_API_KEY in .env
+  timeout_s: 300                # Per-request timeout (seconds)
+  probe_timeout_s: 3            # Health-check timeout at startup
+  # Exponential backoff on reconnect (mirrors tui.monitor settings)
+  backoff_initial_s: 1.0
+  backoff_max_s: 30.0
+  backoff_factor: 1.5
+
+  # Model exposed by local-llm-cloud to use for AMB Sentinel inference.
+  # Set to "" to use whatever model is already loaded on the server.
+  model_id: ""          # must match a profile id in local-llm-cloud config.yaml
+  model_path: ""
+
+  # ── OpenAI-compatible endpoint (alternative to local-llm-cloud) ──────────
+  # Any vLLM / LM Studio / Ollama /v1 endpoint works here.
+  # Leave base_url empty to disable.
+  openai_compat:
+    base_url: ""                # e.g. "http://localhost:11434/v1"  (Ollama)
+    api_key:  ""                # e.g. "ollama" for Ollama
+
+  # ── Backend priority override ──────────────────────────────────────────────
+  # Controls BackendOrchestrator selection order.
+  # "auto" = probe and pick best available (recommended).
+  # Explicit values: local_llm_cloud | llama_cpp | openai | hf | dummy
+  backend_priority: "auto"
+
+  # ── Hardware-profile feed-through ─────────────────────────────────────────
+  # When local-llm-cloud is available its hardware profile is fetched and
+  # used to override these AMB Sentinel ai_service settings at runtime:
+  #   context_length   → profile.context_length
+  #   tokens/sec hint  → profile.target_tps  (used for timeout estimation)
+  #   force_no_think   → injected into Qwen3 prompts on APU profiles
+  apply_hw_profile: true

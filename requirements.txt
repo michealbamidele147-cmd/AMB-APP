@@ -1,0 +1,122 @@
+# =============================================================================
+# AMB-Sentinel AI Security System — Production Requirements
+# Python >= 3.10  (3.11 recommended for best performance)
+#
+# Install:  pip install -r requirements.txt
+#
+# Optional heavy packages (DB drivers, enterprise) are grouped at the bottom
+# and can be commented out if not needed.
+# =============================================================================
+
+# ── Core Web & HTTP ──────────────────────────────────────────────────────────
+requests>=2.31.0
+aiohttp>=3.9.0
+httpx>=0.27.0
+urllib3>=2.0.0
+certifi>=2024.2.2
+charset-normalizer>=3.3.0
+chardet>=5.2.0
+idna>=3.6
+brotli>=1.1.0
+
+# ── YAML / Config ────────────────────────────────────────────────────────────
+PyYAML>=6.0.1
+
+# ── Data Processing ──────────────────────────────────────────────────────────
+numpy>=1.26.0
+pandas>=2.2.0
+openpyxl>=3.1.2
+
+# ── Web Scraping & HTML ──────────────────────────────────────────────────────
+beautifulsoup4>=4.12.3
+lxml>=5.2.0
+feedparser>=6.0.11
+readability-lxml>=0.8.1
+playwright>=1.44.0
+
+# ── File Processing ──────────────────────────────────────────────────────────
+pdfminer.six>=20221105
+PyPDF2>=3.0.1
+python-docx>=1.1.2
+python-pptx>=1.0.0
+Pillow>=10.3.0
+python-magic>=0.4.27
+
+# ── OCR (Tesseract wrapper) ──────────────────────────────────────────────────
+# Requires system package: sudo apt install tesseract-ocr
+pytesseract>=0.3.13
+
+# ── RSS / Feeds ──────────────────────────────────────────────────────────────
+
+# ── Video / Audio ────────────────────────────────────────────────────────────
+yt-dlp>=2024.5.1
+# moviepy>=1.0.3          # Uncomment if video editing needed
+# opencv-python>=4.9.0    # Uncomment if CV pipeline needed
+# ffmpeg-python>=0.2.0    # Uncomment if direct ffmpeg binding needed
+
+# ── Transcription ────────────────────────────────────────────────────────────
+faster-whisper>=1.0.0
+openai-whisper>=20231117
+ctranslate2>=4.3.0
+# librosa>=0.10.1         # Uncomment if audio feature extraction needed
+# soundfile>=0.12.1       # Uncomment if raw audio I/O needed
+
+# ── Machine Learning & AI ────────────────────────────────────────────────────
+torch>=2.2.0
+torchvision>=0.17.0
+transformers>=4.40.0
+sentence-transformers>=3.0.0
+tiktoken>=0.7.0
+
+# ── Local LLM Backends ───────────────────────────────────────────────────────
+llama-cpp-python>=0.2.77
+gpt4all>=2.7.0
+
+# ── OpenAI API (fallback) ────────────────────────────────────────────────────
+openai>=1.25.0
+packaging>=24.0
+
+# ── Database ─────────────────────────────────────────────────────────────────
+psycopg2-binary>=2.9.9
+PyMySQL>=1.1.0
+SQLAlchemy>=2.0.30
+pgvector>=0.2.5
+
+# ── Vector / Embeddings Store ────────────────────────────────────────────────
+# chromadb>=0.5.0         # Uncomment if using Chroma vector store
+# qdrant-client>=1.9.0    # Uncomment if using Qdrant
+
+# ── Cache ────────────────────────────────────────────────────────────────────
+redis>=5.0.4
+
+# ── Task Scheduling ──────────────────────────────────────────────────────────
+APScheduler>=3.10.4
+
+# ── Utilities ────────────────────────────────────────────────────────────────
+psutil>=5.9.8
+filelock>=3.14.0
+pathvalidate>=3.2.0
+tenacity>=8.3.0
+backoff>=2.2.1
+python-dotenv>=1.0.1
+tqdm>=4.66.4
+
+# ── CLI & Terminal Output ────────────────────────────────────────────────────
+colorama>=0.4.6
+rich>=13.7.1
+
+# ── Validation ───────────────────────────────────────────────────────────────
+pydantic>=2.7.0
+
+# ── FastAPI (metrics/health endpoint) ────────────────────────────────────────
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+
+# =============================================================================
+# OPTIONAL — Enterprise / Specialist DB drivers
+# Uncomment only what you need; these have OS-level prerequisites
+# =============================================================================
+# cx_Oracle>=8.3.0          # Oracle DB (requires Oracle Instant Client)
+# oracledb>=2.3.0           # Oracle DB thin driver (no Instant Client needed)
+# ibm_db>=3.2.3             # IBM Db2 (requires IBM driver package)
+# ibm_db_sa>=0.4.0          # IBM Db2 SQLAlchemy dialect

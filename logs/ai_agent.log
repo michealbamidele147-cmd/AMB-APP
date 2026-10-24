@@ -1,0 +1,237 @@
+2026-10-23 23:41:54.290 | INFO     | ai_agent | 🚀 Starting AI Model Service with config: /home/deve-oops/AMB-APP/config.yaml
+2026-10-23 23:41:54.322 | INFO     | ai_agent | ✅ Postgres password loaded from environment variable
+2026-10-23 23:41:54.323 | INFO     | ai_agent | ✅ Postgres host=localhost user=amb_sentinel_user ✅ password=<HIDDEN>
+2026-10-23 23:41:54.323 | INFO     | ai_agent | ✅ Redis password loaded from environment variable
+2026-10-23 23:41:54.323 | INFO     | ai_agent | ✅ Redis host=localhost password_set=yes
+2026-10-23 23:41:54.323 | INFO     | ai_agent | ✅ local-llm-cloud API key loaded from LLM_CLOUD_API_KEY
+2026-10-23 23:41:54.323 | INFO     | ai_agent | embeddings: resolved cache_dir=/home/deve-oops/AMB-APP/model (found models--sentence-transformers--all-MiniLM-L6-v2)
+2026-10-23 23:41:54.374 | INFO     | ai_agent | ✅ Database connection initialized via DatabaseManager
+2026-10-23 23:41:54.394 | INFO     | ai_agent | ✅ DB schema ready (pgvector dim=384 lists=100)
+2026-10-23 23:41:54.399 | INFO     | ai_agent | ✅ Redis memory store initialized successfully
+2026-10-23 23:41:54.402 | INFO     | ai_agent | ✅ Using Redis memory store
+2026-10-23 23:41:55.302 | INFO     | ai_agent | ✅ Loaded embedding model: all-MiniLM-L6-v2
+2026-10-23 23:41:55.303 | INFO     | ai_agent | ✅ Embedding adapter initialized with model: all-MiniLM-L6-v2
+2026-10-23 23:41:55.303 | INFO     | ai_agent | ✅ Vector store initialized with DatabaseManager
+2026-10-23 23:41:55.303 | INFO     | ai_agent | 🔧 Initializing models... Primary: local_llm_cloud
+2026-10-23 23:41:55.376 | INFO     | ai_agent | LLM endpoint: host=localhost port=8080 api_key_set=True
+2026-10-23 23:41:55.472 | INFO     | ai_agent | 🔍 BackendOrchestrator ready: active=local_llm_cloud status={'local_llm_cloud': 'available', 'llama_cpp_direct': 'available', 'openai_compat': 'unavailable', 'transformers': 'available', 'numpy_sim': 'available'}
+2026-10-23 23:41:55.473 | INFO     | ai_agent | 🔧 Loading PRIMARY model: local_llm_cloud
+2026-10-23 23:41:55.473 | INFO     | ai_agent | 🏭 Creating adapter: provider='local_llm_cloud' -> 'local_llm_cloud', model='qwen3-8b', device='auto'
+2026-10-23 23:41:55.474 | INFO     | ai_agent | ⚙️  Initializing adapter (daemon thread)...
+2026-10-23 23:41:55.498 | INFO     | ai_agent | LocalLLMCloudAdapter: resolved model hint 'qwen3-8b' -> 'qwen3-8b' (server has 1 loaded)
+2026-10-23 23:41:55.499 | INFO     | ai_agent | ✅ LocalLLMCloudAdapter: ready via fallback (model=qwen3-8b)
+2026-10-23 23:41:55.499 | INFO     | ai_agent | ✅ Model local_llm_cloud initialized successfully
+2026-10-23 23:41:55.499 | INFO     | ai_agent | ✅ Adapter initialized in executor thread
+2026-10-23 23:41:55.500 | INFO     | ai_agent | ✅ PRIMARY model loaded successfully: local_llm_cloud
+2026-10-23 23:41:55.500 | INFO     | ai_agent | ✅ Models initialized: ['local_llm_cloud']
+2026-10-23 23:41:55.500 | INFO     | ai_agent | ✅ Primary model available: True
+2026-10-23 23:41:55.500 | INFO     | ai_agent | ✅ Registered tool: search_vectorstore
+2026-10-23 23:41:55.500 | INFO     | ai_agent | ✅ Registered tool: get_system_status
+2026-10-23 23:41:55.500 | INFO     | ai_agent | ✅ Registered tool: get_analysis_history
+2026-10-23 23:41:55.500 | INFO     | ai_agent | ✅ Registered tool: query_database
+2026-10-23 23:41:55.500 | INFO     | ai_agent | ✅ Registered 4 default tools
+2026-10-23 23:41:55.501 | INFO     | ai_agent | 🔧 Registered tools: search_vectorstore, get_system_status, get_analysis_history, query_database
+2026-10-23 23:41:55.502 | INFO     | ai_agent | ✅ Registered tool: search_links
+2026-10-23 23:41:55.502 | INFO     | ai_agent | ✅ Registered tool: search_with_dorks
+2026-10-23 23:41:55.502 | INFO     | ai_agent | ✅ Registered tool: find_file_links
+2026-10-23 23:41:55.503 | INFO     | ai_agent | ✅ Registered tool: find_hidden_resources
+2026-10-23 23:41:55.503 | INFO     | ai_agent | ✅ Registered tool: extract_links_from_page
+2026-10-23 23:41:55.503 | INFO     | ai_agent | ✅ Registered tool: expand_links
+2026-10-23 23:41:55.503 | INFO     | ai_agent | ✅ Registered tool: get_available_search_engines
+2026-10-23 23:41:55.503 | INFO     | ai_agent | ✅ Registered tool: create_link_search_config
+2026-10-23 23:41:55.504 | INFO     | ai_agent | ✅ Registered tool: http_fetch
+2026-10-23 23:41:55.504 | INFO     | ai_agent | ✅ Registered tool: http_fetch_batch
+2026-10-23 23:41:55.504 | INFO     | ai_agent | ✅ Registered tool: download_file
+2026-10-23 23:41:55.504 | INFO     | ai_agent | ✅ Registered tool: download_multiple
+2026-10-23 23:41:55.504 | INFO     | ai_agent | ✅ Registered tool: get_download_stats
+2026-10-23 23:41:55.505 | INFO     | ai_agent | ✅ Registered tool: validate_download_result
+2026-10-23 23:41:55.505 | INFO     | ai_agent | ✅ Registered tool: download_health_check
+2026-10-23 23:41:55.505 | INFO     | ai_agent | ✅ Registered tool: cleanup_downloads
+2026-10-23 23:41:55.506 | INFO     | ai_agent | ✅ Registered tool: scrape_page
+2026-10-23 23:41:55.506 | INFO     | ai_agent | ✅ Registered tool: fetch_article_text
+2026-10-23 23:41:55.506 | INFO     | ai_agent | ✅ Registered tool: scrape_batch
+2026-10-23 23:41:55.506 | INFO     | ai_agent | ✅ Registered tool: scrape_async
+2026-10-23 23:41:55.507 | INFO     | ai_agent | ✅ Registered tool: scrape_batch_async
+2026-10-23 23:41:55.507 | INFO     | ai_agent | ✅ Registered tool: parse_feed
+2026-10-23 23:41:55.507 | INFO     | ai_agent | ✅ Registered tool: browser_scrape
+2026-10-23 23:41:55.507 | INFO     | ai_agent | ✅ Registered tool: clear_scraping_cache
+2026-10-23 23:41:55.507 | INFO     | ai_agent | ✅ Registered tool: get_scraping_stats
+2026-10-23 23:41:55.508 | INFO     | ai_agent | ✅ Registered tool: extract_text_from_file
+2026-10-23 23:41:55.508 | INFO     | ai_agent | ✅ Registered tool: extract_text_from_pdf
+2026-10-23 23:41:55.508 | INFO     | ai_agent | ✅ Registered tool: extract_text_from_docx
+2026-10-23 23:41:55.508 | INFO     | ai_agent | ✅ Registered tool: extract_text_from_spreadsheet
+2026-10-23 23:41:55.509 | INFO     | ai_agent | ✅ Registered tool: extract_text_from_textfile
+2026-10-23 23:41:55.509 | INFO     | ai_agent | ✅ Registered tool: extract_and_chunk_file
+2026-10-23 23:41:55.509 | INFO     | ai_agent | ✅ Registered tool: chunk_text
+2026-10-23 23:41:55.509 | INFO     | ai_agent | ✅ Registered tool: batch_extract_files
+2026-10-23 23:41:55.510 | INFO     | ai_agent | ✅ Registered tool: extract_with_ocr
+2026-10-23 23:41:55.510 | INFO     | ai_agent | ✅ Registered tool: process_file_for_vector_store
+2026-10-23 23:41:55.510 | INFO     | ai_agent | ✅ Registered tool: get_extraction_backends
+2026-10-23 23:41:55.510 | INFO     | ai_agent | ✅ Registered tool: video_info
+2026-10-23 23:41:55.510 | INFO     | ai_agent | ✅ Registered tool: download_video
+2026-10-23 23:41:55.511 | INFO     | ai_agent | ✅ Registered tool: download_multiple_videos
+2026-10-23 23:41:55.511 | INFO     | ai_agent | ✅ Registered tool: extract_video_thumbnail
+2026-10-23 23:41:55.511 | INFO     | ai_agent | ✅ Registered tool: get_video_backends
+2026-10-23 23:41:55.511 | INFO     | ai_agent | ✅ Registered tool: transcribe_audio_or_video
+2026-10-23 23:41:55.512 | INFO     | ai_agent | ✅ Registered tool: transcribe_multiple
+2026-10-23 23:41:55.512 | INFO     | ai_agent | ✅ Registered tool: get_transcription_backends
+2026-10-23 23:41:55.512 | INFO     | ai_agent | ✅ Registered tool: clear_model_cache
+2026-10-23 23:41:55.512 | INFO     | ai_agent | ✅ Registered tool: get_supported_formats
+2026-10-23 23:41:55.512 | INFO     | ai_agent | ✅ Registered tool: calculate_file_hash
+2026-10-23 23:41:55.513 | INFO     | ai_agent | ✅ Registered tool: sanitize_filename
+2026-10-23 23:41:55.513 | INFO     | ai_agent | ✅ Registered tool: validate_url
+2026-10-23 23:41:55.513 | INFO     | ai_agent | ✅ Registered tool: generate_safe_filename
+2026-10-23 23:41:55.513 | INFO     | ai_agent | ✅ Registered tool: db_add_connection
+2026-10-23 23:41:55.513 | INFO     | ai_agent | ✅ Registered tool: db_remove_connection
+2026-10-23 23:41:55.513 | INFO     | ai_agent | ✅ Registered tool: db_close_connection
+2026-10-23 23:41:55.513 | INFO     | ai_agent | ✅ Registered tool: db_get_db_type
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_execute
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_query
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_query_one
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_list_tables
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_get_schema
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_create_table
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_begin
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_commit
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_rollback
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_health_check
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: store_raw_item
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_bulk_insert
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_get_metrics
+2026-10-23 23:41:55.514 | INFO     | ai_agent | ✅ Registered tool: db_invalidate_cache
+2026-10-23 23:41:55.515 | INFO     | ai_agent | ✅ Registered tool: db_stream_query
+2026-10-23 23:41:55.515 | INFO     | ai_agent | ✅ Registered tool: create_http_method
+2026-10-23 23:41:55.515 | INFO     | ai_agent | ✅ Registered tool: create_http_retry_strategy
+2026-10-23 23:41:55.515 | INFO     | ai_agent | ✅ Registered tool: create_http_config
+2026-10-23 23:41:55.515 | INFO     | ai_agent | ✅ Registered tool: create_rate_limiter
+2026-10-23 23:41:55.515 | INFO     | ai_agent | ✅ Registered tool: create_http_circuit_breaker
+2026-10-23 23:41:55.515 | INFO     | ai_agent | ✅ Registered tool: create_circuit_state
+2026-10-23 23:41:55.516 | INFO     | ai_agent | ✅ Registered tool: create_content_type
+2026-10-23 23:41:55.516 | INFO     | ai_agent | ✅ Registered tool: create_http_response
+2026-10-23 23:41:55.516 | INFO     | ai_agent | ✅ Registered tool: create_download_options
+2026-10-23 23:41:55.516 | INFO     | ai_agent | ✅ Registered tool: create_download_result
+2026-10-23 23:41:55.516 | INFO     | ai_agent | ✅ Registered tool: create_download_manager
+2026-10-23 23:41:55.516 | INFO     | ai_agent | ✅ Registered tool: create_session_config
+2026-10-23 23:41:55.516 | INFO     | ai_agent | ✅ Registered tool: create_security_level
+2026-10-23 23:41:55.517 | INFO     | ai_agent | ✅ Registered tool: create_retry_strategy
+2026-10-23 23:41:55.517 | INFO     | ai_agent | ✅ Registered tool: create_download_progress
+2026-10-23 23:41:55.517 | INFO     | ai_agent | ✅ Registered tool: create_cleanup_result
+2026-10-23 23:41:55.517 | INFO     | ai_agent | ✅ Registered tool: create_download_config
+2026-10-23 23:41:55.517 | INFO     | ai_agent | ✅ Registered tool: get_default_cache_dir
+2026-10-23 23:41:55.517 | INFO     | ai_agent | ✅ Registered tool: get_default_log_dir
+2026-10-23 23:41:55.517 | INFO     | ai_agent | ✅ Registered tool: create_content_category
+2026-10-23 23:41:55.518 | INFO     | ai_agent | ✅ Registered tool: create_robots_policy
+2026-10-23 23:41:55.518 | INFO     | ai_agent | ✅ Registered tool: create_anti_detection_level
+2026-10-23 23:41:55.518 | INFO     | ai_agent | ✅ Registered tool: create_dependency_manager
+2026-10-23 23:41:55.518 | INFO     | ai_agent | ✅ Registered tool: create_content_extractor
+2026-10-23 23:41:55.518 | INFO     | ai_agent | ✅ Registered tool: create_scraping_result
+2026-10-23 23:41:55.518 | INFO     | ai_agent | ✅ Registered tool: create_robots_txt_checker
+2026-10-23 23:41:55.518 | INFO     | ai_agent | ✅ Registered tool: create_url_validator
+2026-10-23 23:41:55.519 | INFO     | ai_agent | ✅ Registered tool: create_scraping_config
+2026-10-23 23:41:55.519 | INFO     | ai_agent | ✅ Registered tool: create_scraping_engine
+2026-10-23 23:41:55.519 | INFO     | ai_agent | ✅ Registered tool: create_extraction_result
+2026-10-23 23:41:55.519 | INFO     | ai_agent | ✅ Registered tool: create_chunking_strategy
+2026-10-23 23:41:55.519 | INFO     | ai_agent | ✅ Registered tool: create_ocr_engine
+2026-10-23 23:41:55.519 | INFO     | ai_agent | ✅ Registered tool: create_extraction_config
+2026-10-23 23:41:55.519 | INFO     | ai_agent | ✅ Registered tool: create_extraction_engine
+2026-10-23 23:41:55.520 | INFO     | ai_agent | ✅ Registered tool: create_video_platform
+2026-10-23 23:41:55.520 | INFO     | ai_agent | ✅ Registered tool: create_video_quality
+2026-10-23 23:41:55.520 | INFO     | ai_agent | ✅ Registered tool: create_thumbnail_strategy
+2026-10-23 23:41:55.520 | INFO     | ai_agent | ✅ Registered tool: create_video_format
+2026-10-23 23:41:55.520 | INFO     | ai_agent | ✅ Registered tool: create_download_status
+2026-10-23 23:41:55.520 | INFO     | ai_agent | ✅ Registered tool: create_video_metadata
+2026-10-23 23:41:55.520 | INFO     | ai_agent | ✅ Registered tool: create_video_result
+2026-10-23 23:41:55.520 | INFO     | ai_agent | ✅ Registered tool: create_video_backend
+2026-10-23 23:41:55.521 | INFO     | ai_agent | ✅ Registered tool: create_ytdlp_backend
+2026-10-23 23:41:55.521 | INFO     | ai_agent | ✅ Registered tool: create_generic_http_backend
+2026-10-23 23:41:55.521 | INFO     | ai_agent | ✅ Registered tool: create_ffmpeg_backend
+2026-10-23 23:41:55.521 | INFO     | ai_agent | ✅ Registered tool: create_video_processor
+2026-10-23 23:41:55.521 | INFO     | ai_agent | ✅ Registered tool: create_video_config
+2026-10-23 23:41:55.521 | INFO     | ai_agent | ✅ Registered tool: create_transcription_result
+2026-10-23 23:41:55.521 | INFO     | ai_agent | ✅ Registered tool: create_transcription_backend
+2026-10-23 23:41:55.522 | INFO     | ai_agent | ✅ Registered tool: create_compute_type
+2026-10-23 23:41:55.522 | INFO     | ai_agent | ✅ Registered tool: create_transcription_status
+2026-10-23 23:41:55.522 | INFO     | ai_agent | ✅ Registered tool: create_transcription_metrics
+2026-10-23 23:41:55.522 | INFO     | ai_agent | ✅ Registered tool: create_transcription_batch_processor
+2026-10-23 23:41:55.522 | INFO     | ai_agent | ✅ Registered tool: create_resource_monitor
+2026-10-23 23:41:55.522 | INFO     | ai_agent | ✅ Registered tool: create_transcription_circuit_breaker
+2026-10-23 23:41:55.522 | INFO     | ai_agent | ✅ Registered tool: create_transcription_config
+2026-10-23 23:41:55.523 | INFO     | ai_agent | ✅ Registered tool: create_processing_stage
+2026-10-23 23:41:55.523 | INFO     | ai_agent | ✅ Registered tool: create_source_type
+2026-10-23 23:41:55.523 | INFO     | ai_agent | ✅ Registered tool: create_processing_status
+2026-10-23 23:41:55.523 | INFO     | ai_agent | ✅ Registered tool: create_processing_error
+2026-10-23 23:41:55.523 | INFO     | ai_agent | ✅ Registered tool: create_processing_result
+2026-10-23 23:41:55.523 | INFO     | ai_agent | ✅ Registered tool: create_pipeline_metrics
+2026-10-23 23:41:55.523 | INFO     | ai_agent | ✅ Registered tool: create_security_validator
+2026-10-23 23:41:55.523 | INFO     | ai_agent | ✅ Registered tool: create_download_processor
+2026-10-23 23:41:55.524 | INFO     | ai_agent | ✅ Registered tool: create_transcription_processor
+2026-10-23 23:41:55.524 | INFO     | ai_agent | ✅ Registered tool: create_indexing_processor
+2026-10-23 23:41:55.524 | INFO     | ai_agent | ✅ Registered tool: create_pipeline_config
+2026-10-23 23:41:55.524 | INFO     | ai_agent | ✅ Registered tool: create_pipeline_manager
+2026-10-23 23:41:55.524 | INFO     | ai_agent | ✅ Registered tool: create_database_manager
+2026-10-23 23:41:55.524 | INFO     | ai_agent | ✅ Registered tool: check_psycopg2_available
+2026-10-23 23:41:55.524 | INFO     | ai_agent | ✅ Registered tool: check_sqlalchemy_available
+2026-10-23 23:41:55.525 | INFO     | ai_agent | ✅ Registered tool: check_mysql_available
+2026-10-23 23:41:55.525 | INFO     | ai_agent | ✅ Registered tool: check_oracle_available
+2026-10-23 23:41:55.525 | INFO     | ai_agent | ✅ Registered tool: check_db2_available
+2026-10-23 23:41:55.525 | INFO     | ai_agent | ✅ Registered tool: check_dbtools_available
+2026-10-23 23:41:55.525 | INFO     | ai_agent | ✅ Registered tool: create_http_error
+2026-10-23 23:41:55.525 | INFO     | ai_agent | ✅ Registered tool: create_circuit_breaker_open_error
+2026-10-23 23:41:55.525 | INFO     | ai_agent | ✅ Registered tool: create_rate_limit_exceeded_error
+2026-10-23 23:41:55.526 | INFO     | ai_agent | ✅ Registered tool: create_security_violation_error
+2026-10-23 23:41:55.526 | INFO     | ai_agent | ✅ Registered tool: create_response_too_large_error
+2026-10-23 23:41:55.526 | INFO     | ai_agent | ✅ Registered tool: create_database_connection_error
+2026-10-23 23:41:55.527 | INFO     | ai_agent | ✅ Registered tool: transcribe_url_to_vectorstore
+2026-10-23 23:41:55.527 | INFO     | ai_agent | ✅ Registered tool: transcribe_local_to_vectorstore
+2026-10-23 23:41:55.528 | INFO     | ai_agent | ✅ Total tools registered: 156
+2026-10-23 23:41:55.528 | INFO     | ai_agent | tools: registered=156 exposed_to_llm=74 hidden_factories=82
+2026-10-23 23:41:55.532 | INFO     | ai_agent | ✅ Background scheduler started with enhanced jobs
+2026-10-23 23:41:55.532 | INFO     | ai_agent | ✅ Using model: local_llm_cloud
+2026-10-23 23:41:55.532 | INFO     | ai_agent | ✅ Using model: local_llm_cloud (qwen3-8b)
+2026-10-23 23:41:55.532 | INFO     | ai_agent | ⏱️  AgentExecutor timeout set to 3600s (iters=10, per_iter_estimate=600s)
+2026-10-23 23:41:55.532 | INFO     | ai_agent | ⏱️  SmartTimeout: 2048 gen-tokens / 2.0 tok/s × 2.2 safety = 2253s → clamped to 2253s
+2026-10-23 23:41:55.533 | INFO     | ai_agent | ✅ AgentExecutor initialized
+2026-10-23 23:41:55.542 | INFO     | ai_agent | ✅ DataAnalyzer initialized
+2026-10-23 23:41:55.542 | INFO     | ai_agent | ✅ Core components (AgentExecutor and DataAnalyzer) initialized successfully
+2026-10-23 23:41:55.542 | INFO     | ai_agent | ✅ All components initialized successfully
+2026-10-23 23:41:55.542 | INFO     | ai_agent | init phase 1 (components) 1.2s
+2026-10-23 23:41:55.547 | INFO     | ai_agent | ✅ Agent instruction validated successfully
+2026-10-23 23:41:55.547 | INFO     | ai_agent | init phase 2 (validate+monitor) 0.0s
+2026-10-23 23:41:55.547 | INFO     | ai_agent | ✅ AIModelService initialized successfully
+2026-10-23 23:41:55.547 | INFO     | ai_agent | ✅ ExecutionBackupRetrier initialized
+2026-10-23 23:41:55.547 | INFO     | ai_agent | 🚀 Started autonomous execution of AgentExecutor and DataAnalyzer
+2026-10-23 23:41:55.547 | INFO     | ai_agent | ✅ Service initialized successfully
+2026-10-23 23:41:55.547 | INFO     | ai_agent | 🤖 Primary model: local_llm_cloud
+2026-10-23 23:41:55.548 | INFO     | ai_agent | 🛠️ Available tools: 156
+2026-10-23 23:41:55.548 | INFO     | ai_agent | 📝 Agent instruction configured: TASK: Continuously gather, analyze, and store intelligence about kidnapping, banditry, and ransom th...
+2026-10-23 23:41:55.548 | INFO     | ai_agent | ⏰ Agent execution interval: 3600s
+2026-10-23 23:41:55.548 | INFO     | ai_agent | ⏰ Data analysis interval: 1200s
+2026-10-23 23:41:55.548 | INFO     | ai_agent | ⚡ Concurrent execution enabled: True
+2026-10-23 23:41:55.548 | INFO     | ai_agent | 🏃 Service is running. Press Ctrl+C to stop.
+2026-10-23 23:42:55.534 | INFO     | ai_agent | 💚 Health check: HEALTHY
+2026-10-23 23:43:55.536 | INFO     | ai_agent | 💚 Health check: HEALTHY
+2026-10-23 23:44:55.542 | INFO     | ai_agent | 💚 Health check: HEALTHY
+2026-10-23 23:45:55.533 | INFO     | ai_agent | 💚 Health check: HEALTHY
+2026-10-23 23:46:55.534 | INFO     | ai_agent | 💚 Health check: HEALTHY
+2026-10-23 23:47:55.536 | INFO     | ai_agent | 💚 Health check: HEALTHY
+2026-10-23 23:48:55.535 | INFO     | ai_agent | 💚 Health check: HEALTHY
+2026-10-23 23:49:55.534 | INFO     | ai_agent | 💚 Health check: HEALTHY
+2026-10-23 23:50:19.399 | INFO     | ai_agent | 👋 SIGTERM received, shutting down...
+2026-10-23 23:50:19.400 | INFO     | ai_agent | 👋 *** SHUTDOWN EVENT TRIGGERED - STARTING CLEAN SHUTDOWN ***
+2026-10-23 23:50:19.400 | INFO     | ai_agent | 🔴 Calling service.shutdown_async()...
+2026-10-23 23:50:19.400 | INFO     | ai_agent | 🛑 Initiating AIModelService async shutdown...
+2026-10-23 23:50:19.400 | INFO     | ai_agent | ⏰ Pausing scheduler and removing all jobs...
+2026-10-23 23:50:19.401 | INFO     | ai_agent | ✅ Scheduler paused and stopped
+2026-10-23 23:50:19.402 | INFO     | ai_agent | 🛑 AgentExecutor stop signal sent
+2026-10-23 23:50:19.402 | INFO     | ai_agent | 🛑 DataAnalyzer stop signal sent
+2026-10-23 23:50:19.402 | INFO     | ai_agent | 🔄 Cancelling async tasks...
+2026-10-23 23:50:19.430 | INFO     | ai_agent | ✅ All async tasks cancelled and finished
+2026-10-23 23:50:19.430 | INFO     | ai_agent | 🤖 Shutting down all model adapters...
+2026-10-23 23:50:19.431 | INFO     | ai_agent | ✅ Adapter local_llm_cloud shut down cleanly
+2026-10-23 23:50:19.431 | INFO     | ai_agent | ✅ All model adapters removed
+2026-10-23 23:50:19.431 | INFO     | ai_agent | 🗄️ Closing database connections...
+2026-10-23 23:50:19.434 | INFO     | ai_agent | ✅ Database connections closed
+2026-10-23 23:50:19.435 | INFO     | ai_agent | 🧹 Running garbage collection...
+2026-10-23 23:50:20.239 | INFO     | ai_agent | ✅ Garbage collection completed
+2026-10-23 23:50:20.239 | INFO     | ai_agent | ✅ AIModelService async shutdown complete (0.8s)
+2026-10-23 23:50:20.239 | INFO     | ai_agent | ✅ Main function exiting cleanly

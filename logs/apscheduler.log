@@ -1,0 +1,45 @@
+2026-10-23 23:41:55.530 | INFO     | apscheduler.scheduler | Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-10-23 23:41:55.530 | INFO     | apscheduler.scheduler | Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-10-23 23:41:55.531 | INFO     | apscheduler.scheduler | Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-10-23 23:41:55.531 | INFO     | apscheduler.scheduler | Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-10-23 23:41:55.531 | INFO     | apscheduler.scheduler | Added job "AIModelService._health_check" to job store "default"
+2026-10-23 23:41:55.531 | INFO     | apscheduler.scheduler | Added job "AIModelService._warm_models" to job store "default"
+2026-10-23 23:41:55.531 | INFO     | apscheduler.scheduler | Added job "AIModelService._cleanup_memory" to job store "default"
+2026-10-23 23:41:55.531 | INFO     | apscheduler.scheduler | Added job "AIModelService._collect_metrics" to job store "default"
+2026-10-23 23:41:55.531 | INFO     | apscheduler.scheduler | Scheduler started
+2026-10-23 23:42:55.531 | INFO     | apscheduler.executors.default | Running job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:42:55 MST)" (scheduled at 2026-10-23 23:42:55.530339-07:00)
+2026-10-23 23:42:55.532 | INFO     | apscheduler.executors.default | Running job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:42:55 MST)" (scheduled at 2026-10-23 23:42:55.531127-07:00)
+2026-10-23 23:42:55.533 | INFO     | apscheduler.executors.default | Job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:42:55 MST)" executed successfully
+2026-10-23 23:42:55.534 | INFO     | apscheduler.executors.default | Job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:43:55 MST)" executed successfully
+2026-10-23 23:43:55.532 | INFO     | apscheduler.executors.default | Running job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:44:55 MST)" (scheduled at 2026-10-23 23:43:55.530339-07:00)
+2026-10-23 23:43:55.532 | INFO     | apscheduler.executors.default | Running job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:44:55 MST)" (scheduled at 2026-10-23 23:43:55.531127-07:00)
+2026-10-23 23:43:55.536 | INFO     | apscheduler.executors.default | Job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:44:55 MST)" executed successfully
+2026-10-23 23:43:55.537 | INFO     | apscheduler.executors.default | Job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:44:55 MST)" executed successfully
+2026-10-23 23:44:55.531 | INFO     | apscheduler.executors.default | Running job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:45:55 MST)" (scheduled at 2026-10-23 23:44:55.530339-07:00)
+2026-10-23 23:44:55.533 | INFO     | apscheduler.executors.default | Running job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:45:55 MST)" (scheduled at 2026-10-23 23:44:55.531127-07:00)
+2026-10-23 23:44:55.539 | INFO     | apscheduler.executors.default | Job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:45:55 MST)" executed successfully
+2026-10-23 23:44:55.543 | INFO     | apscheduler.executors.default | Job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:45:55 MST)" executed successfully
+2026-10-23 23:45:55.531 | INFO     | apscheduler.executors.default | Running job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:46:55 MST)" (scheduled at 2026-10-23 23:45:55.530339-07:00)
+2026-10-23 23:45:55.534 | INFO     | apscheduler.executors.default | Job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:46:55 MST)" executed successfully
+2026-10-23 23:45:55.534 | INFO     | apscheduler.executors.default | Running job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:46:55 MST)" (scheduled at 2026-10-23 23:45:55.531127-07:00)
+2026-10-23 23:45:55.535 | INFO     | apscheduler.executors.default | Job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:46:55 MST)" executed successfully
+2026-10-23 23:46:55.530 | INFO     | apscheduler.executors.default | Running job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:47:55 MST)" (scheduled at 2026-10-23 23:46:55.530339-07:00)
+2026-10-23 23:46:55.532 | INFO     | apscheduler.executors.default | Running job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:46:55 MST)" (scheduled at 2026-10-23 23:46:55.531127-07:00)
+2026-10-23 23:46:55.533 | INFO     | apscheduler.executors.default | Job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:46:55 MST)" executed successfully
+2026-10-23 23:46:55.533 | INFO     | apscheduler.executors.default | Running job "AIModelService._warm_models (trigger: interval[0:05:00], next run at: 2026-10-23 23:51:55 MST)" (scheduled at 2026-10-23 23:46:55.530766-07:00)
+2026-10-23 23:46:55.533 | INFO     | apscheduler.executors.default | Job "AIModelService._warm_models (trigger: interval[0:05:00], next run at: 2026-10-23 23:51:55 MST)" executed successfully
+2026-10-23 23:46:55.534 | INFO     | apscheduler.executors.default | Job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:47:55 MST)" executed successfully
+2026-10-23 23:47:55.530 | INFO     | apscheduler.executors.default | Running job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:48:55 MST)" (scheduled at 2026-10-23 23:47:55.530339-07:00)
+2026-10-23 23:47:55.532 | INFO     | apscheduler.executors.default | Running job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:48:55 MST)" (scheduled at 2026-10-23 23:47:55.531127-07:00)
+2026-10-23 23:47:55.533 | INFO     | apscheduler.executors.default | Job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:48:55 MST)" executed successfully
+2026-10-23 23:47:55.536 | INFO     | apscheduler.executors.default | Job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:48:55 MST)" executed successfully
+2026-10-23 23:48:55.531 | INFO     | apscheduler.executors.default | Running job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:49:55 MST)" (scheduled at 2026-10-23 23:48:55.530339-07:00)
+2026-10-23 23:48:55.533 | INFO     | apscheduler.executors.default | Running job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:49:55 MST)" (scheduled at 2026-10-23 23:48:55.531127-07:00)
+2026-10-23 23:48:55.534 | INFO     | apscheduler.executors.default | Job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:49:55 MST)" executed successfully
+2026-10-23 23:48:55.535 | INFO     | apscheduler.executors.default | Job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:49:55 MST)" executed successfully
+2026-10-23 23:49:55.531 | INFO     | apscheduler.executors.default | Running job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:50:55 MST)" (scheduled at 2026-10-23 23:49:55.530339-07:00)
+2026-10-23 23:49:55.532 | INFO     | apscheduler.executors.default | Running job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:50:55 MST)" (scheduled at 2026-10-23 23:49:55.531127-07:00)
+2026-10-23 23:49:55.533 | INFO     | apscheduler.executors.default | Job "AIModelService._collect_metrics (trigger: interval[0:01:00], next run at: 2026-10-23 23:50:55 MST)" executed successfully
+2026-10-23 23:49:55.534 | INFO     | apscheduler.executors.default | Job "AIModelService._health_check (trigger: interval[0:01:00], next run at: 2026-10-23 23:50:55 MST)" executed successfully
+2026-10-23 23:50:19.400 | INFO     | apscheduler.scheduler | Paused scheduler job processing
+2026-10-23 23:50:19.401 | INFO     | apscheduler.scheduler | Scheduler has been shut down

@@ -1,0 +1,2 @@
+2026-10-23 23:41:54.371 | INFO     | DBTools | Added PostgreSQL connection 'primary' -> postgresql://amb_sentinel_user:***@localhost:5432/amb_sentinel
+2026-10-23 23:41:55.515 | INFO     | DBTools | Registered database tools in ToolRegistry
